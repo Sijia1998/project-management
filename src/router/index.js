@@ -1,5 +1,5 @@
-import Login from '../component/login'
-import Management from '../component/management'
+import Login from '@/views/login'
+import Management from '@/views/management'
 
 let router = [
   {
@@ -10,7 +10,7 @@ let router = [
   {
     path: '/management',
     component: Management,
-    exact: true
+    exact: false
   }
 ]
 

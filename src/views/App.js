@@ -1,26 +1,21 @@
 import React, { Component } from 'react'
-// import Login from '../component/login'
-import { HashRouter, Route, Link } from 'react-router-dom'
-import { Layout } from 'antd'
+import { HashRouter, Route } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import store from '@/store'
 import styles from './App.less'
 import router from '../router'
 
-class Views extends React.Component {
+class Views extends Component {
   render() {
     return (
-      // <div className={styles['wrapper']}>
-      //   <Login />
-      // </div>
       <HashRouter>
-        <div className={styles['wrapper']}>
-          {router.map((route, key) => {
-            if (route.exact) {
-              return <Route exact key={key} path={route.path} render={props => (
-                <route.component {...props} routes={route.routes}></route.component>
-              )}></Route>
-            }
-          })}
-        </div>
+        <Provider store={store}>
+          <div className={styles['wrapper']}>
+            {router.map((route, key) => (
+              <Route path={route.path} key={key} exact={route.exact} component={route.component}></Route>
+            ))}
+          </div>
+        </Provider>
       </HashRouter>
     )
   }
