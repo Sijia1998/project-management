@@ -8,15 +8,19 @@ import { actionCreators } from './store'
 
 class LoginForm extends Component {
   handleSubmit = async e => {
-    const { history, handleLogin, userInfo } = this.props
+    const { handleLogin, form: { validateFields } } = this.props
     e.preventDefault();
-    handleLogin()
-
+    validateFields(async (err, fieldsValue) => {
+      if (err) {
+        return;
+      }
+      handleLogin(fieldsValue)
+    });
   }
 
   componentWillReceiveProps(newProps) {
     const { history } = this.props
-    if (newProps !== this.props) {
+    if (newProps.userInfo !== this.props.userInfo) {
       console.log(newProps.userInfo)
       history.push('/management')
     }
@@ -28,7 +32,7 @@ class LoginForm extends Component {
       <div className={styles['login-wrapper']}>
         <Form onSubmit={this.handleSubmit} className='login-form'>
           <Form.Item>
-            {getFieldDecorator('userName', {
+            {getFieldDecorator('username', {
               rules: [{ required: true, message: 'Please input your username!' }]
             })(<Input prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />} size='large' placeholder='Username' />)}
           </Form.Item>
@@ -69,4 +73,6 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Form.create()(LoginForm)))
+const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(LoginForm);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(WrappedNormalLoginForm))

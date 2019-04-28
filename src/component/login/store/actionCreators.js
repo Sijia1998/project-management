@@ -13,6 +13,8 @@ export const getUserInfo = () => ({
 export const saveUserInfo = () => {
   return async dispatch => {
     let res = await login()
+    console.log('res', res.data.data)
+    localStorage.setItem('token', res.data.data.token)
     dispatch(changeUserInfo(res.data.data))
   }
 }

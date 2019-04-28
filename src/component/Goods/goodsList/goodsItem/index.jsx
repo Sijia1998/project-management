@@ -1,30 +1,13 @@
 import React, { Component } from 'react'
 import styles from './style.less'
-import { Card, Button, Modal, message } from 'antd';
-import { rentProduct } from '@/api/product'
+import { Card } from 'antd';
 
-const confirm = Modal.confirm;
+const { Meta } = Card;
 
-const showConfirm = (id) => {
-  console.log('id1', id)
-  confirm({
-    title: '是否要租用此物品?',
-    async onOk() {
-      console.log('id', id)
-      let res = await rentProduct(id)
-      if (res.data.status === '0') {
-        message.success('租借成功')
-      }
-    },
-    onCancel() {
-      console.log('Cancel');
-    },
-  });
-}
 
 class GoodsItem extends Component {
   render() {
-    const { productId, productName, productPrice, productType, imgUrl, numberOver, numberIng, numberDone, noteForC, deposit } = this.props
+    const { productName, productPrice, productType, imgUrl, numberOver, numberIng, numberDone, noteForC, deposit } = this.props
     const goodsType = {
       'ride': '代步工具',
       'bed': '床上用品',
@@ -54,9 +37,6 @@ class GoodsItem extends Component {
               <span className="card-number-style">{`故障:${numberOver}`}</span>
             </div>
             <div>备注:{noteForC}</div>
-            <div style={{ position: 'absolute', bottom: 20 }}>
-              <Button type="primary" style={{ width: 200, height: 30 }} onClick={() => showConfirm(productId)}>租借</Button>
-            </div>
           </div>
         </Card>
       </div>

@@ -6,13 +6,18 @@ import { registe } from '@/api/user'
 
 class LoginForm extends Component {
   handleSubmit = async e => {
-    const { history } = this.props
+    const { history, form: { validateFields } } = this.props
     e.preventDefault();
-    let result = await registe()
-    console.log(result.data.status)
-    if (result.data.status === '0') {
-      history.push('/management')
-    }
+
+    validateFields(async (err, fieldsValue) => {
+      if (err) {
+        return;
+      }
+      let result = await registe(fieldsValue)
+      if (result.data.status === '0') {
+        history.push('/management')
+      }
+    });
   }
 
   render() {

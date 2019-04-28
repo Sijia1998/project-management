@@ -1,10 +1,19 @@
 import api from '@/utils/request'
 
+export const getApplysList = ()=>{
+  return api.request({
+    url:'applys',
+    method:'get'
+  })
+}
+
 export const getApplyDetail = data => {
   return api.request({
     url: 'apply',
     method: 'get',
-    data
+    params:{
+      data
+    }
   })
 }
 

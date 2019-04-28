@@ -1,61 +1,39 @@
 import React, { Component } from 'react'
-// import styles from './style.less'
-import { Table } from 'antd';
-import { connect } from 'react-redux'
+import GoodsItem from './goodsItem'
+import styles from './style.less'
+import { connect } from 'react-redux';
+import * as business from '@/store/businessStore/actionCreators'
 
-const columns = [{
-  title: '物品名称',
-  dataIndex: 'name',
-}, {
-  title: '价格',
-  dataIndex: 'price',
-}, {
-  title: '押金',
-  dataIndex: 'deposit',
-}, {
-  title: '已租',
-  dataIndex: 'numberOver',
-}, {
-  title: '正在租',
-  dataIndex: 'numberIng',
-}, {
-  title: '未租',
-  dataIndex: 'numberDone',
-}, {
-  title: '备注',
-  dataIndex: 'noteForC',
-}, {
-  title: '物品种类',
-  dataIndex: 'productType',
-}];
 
-class TableView extends Component {
-  getSourceData = () => {
-    const { goodsList } = this.props;
-    let data = []
-    goodsList.map((item) => {
-      data.push({
-        key: item.id,
-        name: item.name,
-        price: item.price,
-        deposit: item.deposit,
-        numberOver: item.numberOver,
-        numberIng: item.numberIng,
-        numberDone: item.numberDone,
-        noteForCL: item.noteForC,
-        productType: item.productType
-      })
-    })
-    return data
-  }
 
+class GoodsList extends Component {
   render() {
-    let data = this.getSourceData()
+    const { goodsList } = this.props;
+    console.log(goodsList)
     return (
-      <div>
-        <Table columns={columns} dataSource={data} />
+      <div className={styles['goods-container']}>
+        {goodsList.map(item => (
+          <GoodsItem
+            key={item.id}
+            imgUrl={item.img}
+            productName={item.name}
+            productPrice={item.price}
+            productType={item.productType}
+            numberOver={item.numberOver}
+            numberIng={item.numberIng}
+            numberDone={item.numberDone}
+            noteForC={item.noteForC}
+            deposit={item.deposit}
+          >
+          </GoodsItem>
+        )
+        )}
       </div>
     )
+  }
+  componentDidMount() {
+    const { getGoodsList } = this.props;
+    getGoodsList();
   }
 }
 
@@ -65,5 +43,13 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    // 获取物品列表
+    getGoodsList() {
+      dispatch(business.handleProduct())
+    }
+  }
+}
 
-export default connect(mapStateToProps)(TableView)
+export default connect(mapStateToProps, mapDispatchToProps)(GoodsList)

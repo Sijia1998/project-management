@@ -1,10 +1,19 @@
 import api from '@/utils/request'
 
+export const getOrdersList = ()=>{
+  return api.request({
+    url:'orders',
+    method:'get'
+  })
+}
+
 export const getOrderDetail = data => {
   return api.request({
     url: 'order',
     method: 'get',
-    data
+    params:{
+      data
+    }
   })
 }
 

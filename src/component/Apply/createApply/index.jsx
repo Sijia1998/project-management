@@ -56,8 +56,8 @@ class CreateApply extends Component {
               rules: [{ required: true, message: '请选择申请类型!' }],
             })(
               <Select style={{ width: 120 }} placeholder="请选择">
-                <Option value="repair">故障报修</Option>
-                <Option value="rerent">物品续租</Option>
+                <Option value="0">故障报修</Option>
+                <Option value="1">物品续租</Option>
               </Select>
             )}
           </Form.Item>

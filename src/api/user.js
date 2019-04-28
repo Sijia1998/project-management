@@ -1,9 +1,12 @@
 import api from '@/utils/request'
 
-export const login = () => {
+export const login = data => {
   return api.request({
     url: '/user',
-    methods: 'get'
+    methods: 'get',
+    params:{
+      data,
+    }
   })
 }
 
