@@ -18,7 +18,7 @@ class ContentView extends Component {
         background: '#fff', padding: 20, marginTop: 20, minHeight: 280
       }}
       >
-        <div>
+        <div style={{ height: '100%' }}>
           <Switch>
             {/* 判断用户类型，若是管理员则显示图表，普通用户显示Welcome页 */}
             <Route exact path='/management' component={userType === '0' ? Charts : WelcomeView}></Route>

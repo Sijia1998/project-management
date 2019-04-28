@@ -91,7 +91,7 @@ export const commonRoutes = [
     }, {
       key: 'apply_surrender',
       path: '/management/own_apply_list',
-      component: ApplyList,
+      component: ProcessedList,
       iconType: 'notification',
       title: '我的申请',
     }]
