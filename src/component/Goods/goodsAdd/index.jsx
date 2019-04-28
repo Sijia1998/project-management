@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {
-  Form, InputNumber, Button, Input, Select
+  Form, InputNumber, Button, Input, Select, message
 } from 'antd';
 import { addProduct } from '@/api/product'
 import ToolBar from '@/component/ToolSteps'
@@ -17,8 +17,11 @@ class GoodsAdd extends Component {
         return;
       }
       let res = await addProduct(fieldsValue)
-      console.log('data', fieldsValue)
-      console.log('res', res)
+      if (res.data.status === '0') {
+        message.success('添加成功')
+      } else {
+        message.error('添加失败')
+      }
     });
 
   }

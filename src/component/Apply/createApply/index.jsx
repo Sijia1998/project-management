@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import {
-  Form, InputNumber, Button, Input, Select
+  Form, message, Button, Input, Select
 } from 'antd';
+import { createApply } from '@/api/apply'
+
+
 const { TextArea } = Input;
 const Option = Select.Option;
 
@@ -13,7 +16,12 @@ class CreateApply extends Component {
       if (err) {
         return;
       }
-      console.log('data', fieldsValue)
+      let res = await createApply(fieldsValue)
+      if (res.data.status === '0') {
+        message.success('提交成功')
+      } else {
+        message.error('提交失败')
+      }
     });
   }
   render() {
