@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import {
-  Form, message, Button, Input, Select
+  Form, InputNumber, Button, Input, Select, message
 } from 'antd';
 import { createApply } from '@/api/apply'
-
-
 const { TextArea } = Input;
 const Option = Select.Option;
+
 
 class CreateApply extends Component {
   handleSubmit = (e) => {
@@ -16,11 +15,12 @@ class CreateApply extends Component {
       if (err) {
         return;
       }
-      let res = await createApply(fieldsValue)
-      if (res.data.status === '0') {
-        message.success('提交成功')
-      } else {
-        message.error('提交失败')
+      let result = await createApply(fieldsValue)
+      console.log('data', result)
+      if (result.data.status === "0") {
+        message.success('申请提交成功', 2, () => {
+          this.props.form.resetFields();
+        });
       }
     });
   }

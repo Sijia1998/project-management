@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Form, Icon, Input, Button } from 'antd'
+import { Form, Icon, Input, Button, message } from 'antd'
 import styles from './style.less'
 import { registe } from '@/api/user'
 
 class LoginForm extends Component {
   handleSubmit = async e => {
-    const { history, form: { validateFields } } = this.props
+    const { history, form: { validateFields, resetFields }, changeTab } = this.props
     e.preventDefault();
 
     validateFields(async (err, fieldsValue) => {
@@ -14,8 +14,13 @@ class LoginForm extends Component {
         return;
       }
       let result = await registe(fieldsValue)
-      if (result.data.status === '0') {
-        history.push('/management')
+      console.log(result)
+      if (result.data.status === 1) {
+        message.error('此用户已存在');
+      } else {
+        message.success('注册成功');
+        resetFields()
+        changeTab('1')
       }
     });
   }
@@ -31,7 +36,7 @@ class LoginForm extends Component {
             })(<Input prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />} size='large' placeholder='Username' />)}
           </Form.Item>
           <Form.Item>
-            {getFieldDecorator('password', {
+            {getFieldDecorator('passWord', {
               rules: [{ required: true, message: 'Please input your Password!' }]
             })(
               <Input

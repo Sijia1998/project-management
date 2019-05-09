@@ -9,7 +9,6 @@ import * as business from '@/store/businessStore/actionCreators'
 class GoodsList extends Component {
   render() {
     const { goodsList } = this.props;
-    console.log(goodsList)
     return (
       <div className={styles['goods-container']}>
         {goodsList.map(item => (

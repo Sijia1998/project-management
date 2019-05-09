@@ -10,9 +10,9 @@ export const getUserInfo = () => ({
   type: actionTypes.GET_USERINFO,
 })
 
-export const saveUserInfo = () => {
+export const saveUserInfo = data => {
   return async dispatch => {
-    let res = await login()
+    let res = await login(data)
     console.log('res', res.data.data)
     localStorage.setItem('token', res.data.data.token)
     dispatch(changeUserInfo(res.data.data))

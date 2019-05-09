@@ -32,12 +32,12 @@ class LoginForm extends Component {
       <div className={styles['login-wrapper']}>
         <Form onSubmit={this.handleSubmit} className='login-form'>
           <Form.Item>
-            {getFieldDecorator('username', {
+            {getFieldDecorator('userName', {
               rules: [{ required: true, message: 'Please input your username!' }]
             })(<Input prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />} size='large' placeholder='Username' />)}
           </Form.Item>
           <Form.Item>
-            {getFieldDecorator('password', {
+            {getFieldDecorator('passWord', {
               rules: [{ required: true, message: 'Please input your Password!' }]
             })(
               <Input
@@ -67,8 +67,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleLogin() {
-      dispatch(actionCreators.saveUserInfo())
+    handleLogin(data) {
+      dispatch(actionCreators.saveUserInfo(data))
     }
   }
 }

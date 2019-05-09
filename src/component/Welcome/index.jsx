@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 class WelcomeView extends Component {
   render() {
-    return <div>Welcome,蔡徐坤</div>
+    return <div>你好, 欢迎使用租赁系统</div>
   }
 }
 

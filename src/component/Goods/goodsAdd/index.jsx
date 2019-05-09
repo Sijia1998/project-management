@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import {
-  Form, InputNumber, Button, Input, Select, message
+  Form, InputNumber, Button, Input, Select, message, Upload, Icon, Modal
 } from 'antd';
 import { addProduct } from '@/api/product'
 import ToolBar from '@/component/ToolSteps'
 import { withRouter } from 'react-router-dom'
 import styles from './style.less'
+import PicUpload from './upLoad'
 
 const { TextArea } = Input;
 const Option = Select.Option;
@@ -73,6 +74,29 @@ class GoodsAdd extends Component {
           )}
         </Form.Item>
         <Form.Item
+          label="物品图片"
+        >
+          {getFieldDecorator('productPic', {
+            rules: [{ required: true, message: '请选择物品类型!' }],
+          })(
+            <PicUpload></PicUpload>
+          )}
+        </Form.Item>
+
+        <Form.Item
+          label="物品数量"
+        >
+          {getFieldDecorator('total', {
+            initialValue: '1',
+            rules: [{ required: true, message: '请输入物品数量!' }],
+          })(
+            <InputNumber
+              // formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              // parser={value => value.replace(/\$\s?|(,*)/g, '')}
+              style={{ width: 80 }} />
+          )}
+        </Form.Item>
+        <Form.Item
           label="物品价格"
         >
           {getFieldDecorator('price', {
@@ -100,6 +124,15 @@ class GoodsAdd extends Component {
         </Form.Item>
         <Form.Item
           label="备注信息"
+        >
+          {getFieldDecorator('note', {
+            rules: [{ required: true, message: '请输入备注信息' }],
+          })(
+            <TextArea placeholder="请输入备注信息" style={{ width: 200 }} autosize={{ minRows: 4, maxRows: 6 }} />
+          )}
+        </Form.Item>
+        <Form.Item
+          label="用户备注信息"
         >
           {getFieldDecorator('noteForC', {
             rules: [{ required: true, message: '请输入备注信息' }],

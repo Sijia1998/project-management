@@ -15,7 +15,7 @@ class ContentView extends Component {
     const Router = userType === '0' ? routes : commonRoutes
     return (
       <Content style={{
-        background: '#fff', padding: 20, marginTop: 20, minHeight: 280
+        background: '#fff', padding: 20, marginTop: 20, minHeight: 280, position: 'absolute', width: '80%'
       }}
       >
         <div style={{ height: '100%' }}>

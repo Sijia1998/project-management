@@ -3,7 +3,7 @@ import api from '@/utils/request'
 export const login = data => {
   return api.request({
     url: '/user',
-    methods: 'get',
+    method: 'get',
     params:{
       data,
     }
@@ -13,7 +13,7 @@ export const login = data => {
 export const registe = data => {
   return api.request({
     url: '/user',
-    methods: 'post',
+    method: 'post',
     data
   })
 }
@@ -21,13 +21,13 @@ export const registe = data => {
 export const getBSInfo = () => {
   return api.request({
     url: 'getBInfo',
-    methods: 'get'
+    method: 'get'
   })
 }
 
 export const getCusInfo = () => {
   return api.request({
     url: 'getCInfo',
-    methods: 'get'
+    method: 'get'
   })
 }

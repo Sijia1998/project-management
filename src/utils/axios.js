@@ -41,7 +41,7 @@ class Axios {
         if (token) {
           config.headers['Authorization'] = token;
         } else {
-          window.location.replace('http://47.93.45.54:5050')
+          // window.location.replace('http://47.93.45.54:5050')
         }
         return config
       }
