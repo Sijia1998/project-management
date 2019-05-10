@@ -3,13 +3,14 @@ import {
   Form, InputNumber, Button, Input, Select, message
 } from 'antd';
 import { createApply } from '@/api/apply'
+import { withRouter } from 'react-router-dom'
 const { TextArea } = Input;
 const Option = Select.Option;
 
 
 class CreateApply extends Component {
   handleSubmit = (e) => {
-    const { form: { validateFields } } = this.props;
+    const { form: { validateFields }, history } = this.props;
     e.preventDefault();
     validateFields(async (err, fieldsValue) => {
       if (err) {
@@ -17,10 +18,13 @@ class CreateApply extends Component {
       }
       let result = await createApply(fieldsValue)
       console.log('data', result)
-      if (result.data.status === "0") {
+      if (result.data.status === 0) {
         message.success('申请提交成功', 2, () => {
           this.props.form.resetFields();
+          history.push('/management/own_apply_list')
         });
+      } else if (result.data.status === 1) {
+        message.error('申请失败')
       }
     });
   }
@@ -83,4 +87,4 @@ class CreateApply extends Component {
   }
 }
 
-export default Form.create()(CreateApply)
+export default Form.create()(withRouter(CreateApply))

@@ -6,6 +6,7 @@ const defaultState = {
   // userName: "",
   // userPic: "",
   // userType: ""
+  // status:''
 }
 
 export default (state = defaultState, action) => {

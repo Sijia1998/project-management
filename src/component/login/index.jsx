@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Form, Icon, Input, Button } from 'antd'
+import { Form, Icon, Input, Button, message } from 'antd'
 import styles from './style.less'
 // import { login } from '@/api/user'
 import { connect } from 'react-redux'
@@ -17,15 +17,7 @@ class LoginForm extends Component {
       handleLogin(fieldsValue)
     });
   }
-
-  componentWillReceiveProps(newProps) {
-    const { history } = this.props
-    if (newProps.userInfo !== this.props.userInfo) {
-      console.log(newProps.userInfo)
-      history.push('/management')
-    }
-  }
-
+  
   render() {
     const { form: { getFieldDecorator } } = this.props
     return (

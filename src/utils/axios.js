@@ -39,7 +39,7 @@ class Axios {
       if (url !== 'user') {
         let token = localStorage.getItem('token')
         if (token) {
-          config.headers['Authorization'] = token;
+          config.headers['Authorization'] = `Bearer ${token}`;
         } else {
           // window.location.replace('http://47.93.45.54:5050')
         }
@@ -62,6 +62,9 @@ class Axios {
           status,
           request: { responseURL: config.url }
         }
+      }
+      if (errorInfo.status === 401) {
+        window.location.hash = '/'
       }
       return Promise.reject(errorInfo)
     })

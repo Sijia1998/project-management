@@ -1,19 +1,17 @@
 import api from '@/utils/request'
 
-export const getApplysList = ()=>{
+export const getApplysList = () => {
   return api.request({
-    url:'applys',
-    method:'get'
+    url: 'applies',
+    method: 'get'
   })
 }
 
 export const getApplyDetail = data => {
   return api.request({
-    url: 'apply',
+    url: `apply/${data}`,
     method: 'get',
-    params:{
-      data
-    }
+
   })
 }
 
@@ -37,9 +35,8 @@ export const updateApply = data => {
 
 export const deleteApply = data => {
   return api.request({
-    url: 'apply',
+    url: `apply/${data}`,
     method: 'delete',
-    data
   })
 }
 

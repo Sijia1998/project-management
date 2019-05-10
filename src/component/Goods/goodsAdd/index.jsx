@@ -6,7 +6,7 @@ import { addProduct } from '@/api/product'
 import ToolBar from '@/component/ToolSteps'
 import { withRouter } from 'react-router-dom'
 import styles from './style.less'
-import PicUpload from './upLoad'
+// import PicUpload from './upLoad'
 
 const { TextArea } = Input;
 const Option = Select.Option;
@@ -24,8 +24,9 @@ class GoodsAdd extends Component {
       if (err) {
         return;
       }
+      console.log('validateFields', validateFields)
       let res = await addProduct(fieldsValue)
-      if (res.data.status === '0') {
+      if (res.data.status === 0) {
         message.success('添加成功');
         this.setState({
           steps: 1
@@ -73,16 +74,15 @@ class GoodsAdd extends Component {
             </Select>
           )}
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           label="物品图片"
         >
           {getFieldDecorator('productPic', {
-            rules: [{ required: true, message: '请选择物品类型!' }],
+            rules: [{ required: true, message: '请上传图片!' }],
           })(
             <PicUpload></PicUpload>
           )}
-        </Form.Item>
-
+        </Form.Item> */}
         <Form.Item
           label="物品数量"
         >

@@ -28,6 +28,18 @@ class ModelView extends Component {
         onOk={onCreate}
       >
         <Form layout="horizontal" {...formItemLayout}>
+          <Form.Item label="订单状态">
+            {getFieldDecorator('applyStatus', {
+              initialValue: formValue.applyStatus,
+              rules: [{ required: true, message: '请选择订单状态!' }],
+            })(
+              <Select style={{ width: 120 }} placeholder="请选择">
+                <Option value="0">未开始</Option>
+                <Option value="1">进行中</Option>
+                <Option value="2">已结束</Option>
+              </Select>
+            )}
+          </Form.Item>
           <Form.Item label="标题">
             {getFieldDecorator('applyTitle', {
               initialValue: formValue.applyTitle,
@@ -50,8 +62,8 @@ class ModelView extends Component {
               rules: [{ required: true, message: '请输入详细信息!' }],
             })(
               <Select style={{ width: 120 }} placeholder="请选择">
-                <Option value="repair">报修</Option>
-                <Option value="rerent">续租</Option>
+                <Option value="0">故障报修</Option>
+                <Option value="1">物品续租</Option>
               </Select>
             )}
           </Form.Item>
@@ -66,6 +78,22 @@ class ModelView extends Component {
           <Form.Item label="申请人">
             {getFieldDecorator('applyUser', {
               initialValue: formValue.applyUser,
+              rules: [{ required: true, message: '请输入详细信息!' }],
+            })(
+              <Input disabled style={{ width: 200 }} />
+            )}
+          </Form.Item>
+          <Form.Item label="联系方式">
+            {getFieldDecorator('phone', {
+              initialValue: formValue.phone,
+              rules: [{ required: true, message: '请输入详细信息!' }],
+            })(
+              <Input disabled style={{ width: 200 }} />
+            )}
+          </Form.Item>
+          <Form.Item label="邮箱">
+            {getFieldDecorator('email', {
+              initialValue: formValue.email,
               rules: [{ required: true, message: '请输入详细信息!' }],
             })(
               <Input disabled style={{ width: 200 }} />

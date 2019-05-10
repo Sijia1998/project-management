@@ -8,12 +8,19 @@ export const addProduct = data => {
     data
   })
 }
+// 删除物品
+export const deleteProduct = data => {
+  return api.request({
+    url: `product/${data}`,
+    method: 'delete',
+  })
+}
 
 // 获取物品列表
-export const getProductList = ()=>{
+export const getProductList = () => {
   return api.request({
-    url:'products',
-    method:'get'
+    url: 'products',
+    method: 'get'
   })
 }
 
@@ -22,16 +29,14 @@ export const getProductDetail = data => {
   return api.request({
     url: 'product',
     method: 'get',
-    params: {
-      data
-    }
+    params: data
   })
 }
 
 // 租借物品
 export const rentProduct = data => {
   return api.request({
-    url: 'buy',
+    url: 'order',
     method: 'post',
     data
   })

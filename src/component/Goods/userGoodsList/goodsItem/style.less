@@ -1,19 +1,31 @@
-.flexBox{
-  display:flex;
+.flexBox {
+  display: flex;
   justify-content: space-between;
-  margin:10px 0;
+  margin: 10px 0;
 }
 
 .card-wrapper {
-  margin-left:20px;
-  :global{
-    .card-number-wrapper{
-      .flexBox
-      
-    }
-    .card-price-wrapper{
+  margin-left: 20px;
+
+  :global {
+    .card-number-wrapper {
       .flexBox
     }
 
+    .card-price-wrapper {
+      .flexBox
+    }
+
+  }
+}
+
+.modal-wrapper {
+  display: flex;
+  justify-content: space-around;
+
+  :global {
+    .flex-item {
+      text-align: center;
+    }
   }
 }

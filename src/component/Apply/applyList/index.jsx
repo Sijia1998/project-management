@@ -9,30 +9,31 @@ import ModalForm from '@/component/Modal/ApplyModal'
 
 const confirm = Modal.confirm;
 
-function showDeleteConfirm(record) {
-  confirm({
-    title: '确定要删除此项吗?',
-    // content: 'Some descriptions',
-    okText: 'Yes',
-    okType: 'danger',
-    cancelText: 'No',
-    async onOk() {
-      console.log(record.key);
-      let res = await deleteApply(record.key)
-      if (res.data.status === '0') {
-        message.success('删除成功!')
-      }
-    },
-    onCancel() {
-      console.log('Cancel');
-    },
-  });
-}
-
 class TableView extends Component {
   state = {
     visible: false,
     formValue: null
+  }
+  showDeleteConfirm = function (record) {
+    const { getApplyList } = this.props
+    confirm({
+      title: '确定要删除此项吗?',
+      // content: 'Some descriptions',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      async onOk() {
+        console.log(record.key);
+        let res = await deleteApply(record.key)
+        if (res.data.status === 0) {
+          message.success('删除成功!')
+          getApplyList()
+        }
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
   }
   getSourceData = () => {
     const { applyList, userApplyList, userType } = this.props;
@@ -42,7 +43,7 @@ class TableView extends Component {
     let list = userType === '0' ? applyList : userApplyList
     list.map((item) => {
       data.push({
-        key: item.id,
+        key: item._id,
         applyTitle: item.applyTitle,
         applyContent: item.applyContent,
         applyType: item.applyType,
@@ -59,14 +60,18 @@ class TableView extends Component {
 
   handleCreate = () => {
     const form = this.formRef.props.form;
+    const { getApplyList } = this.props;
     const { formValue } = this.state
     form.validateFields(async (err, values) => {
       if (err) {
         return;
       }
       let res = await updateApply(Object.assign(formValue, values))
-      console.log('Received values of form: ', values);
-      console.log('Received : ', res);
+      console.log(res)
+      if (res.data.status === 0) {
+        message.success('修改成功')
+        getApplyList()
+      }
       form.resetFields();
       this.setState({ visible: false, formValue: null });
     });
@@ -84,6 +89,10 @@ class TableView extends Component {
   render() {
     let data = this.getSourceData()
     const { userType } = this.props
+    const orderTypeObj = {
+      '0': '故障报修',
+      '1': '物品续租'
+    }
     const adminColumns = [{
       title: '标题',
       dataIndex: 'applyTitle',
@@ -93,6 +102,12 @@ class TableView extends Component {
     }, {
       title: '申请类型',
       dataIndex: 'applyType',
+      render: (text, record) => {
+        console.log(record.applyType)
+        return (
+          <span>{orderTypeObj[`${record.applyType}`]}</span>
+        )
+      }
     }, {
       title: '申请时间',
       dataIndex: 'startTime',
@@ -106,7 +121,7 @@ class TableView extends Component {
         <span>
           <a href="javascript:;" onClick={() => this.showModal(record)}>查看</a>
           <Divider type="vertical" />
-          <a href="javascript:;" style={{ color: 'red' }} onClick={() => showDeleteConfirm(record)}>删除</a>
+          <a href="javascript:;" style={{ color: 'red' }} onClick={() => this.showDeleteConfirm(record)}>删除</a>
         </span >
       ),
     }];
@@ -119,6 +134,12 @@ class TableView extends Component {
     }, {
       title: '申请类型',
       dataIndex: 'applyType',
+      render: (text, record) => {
+        console.log(record.applyType)
+        return (
+          <span>{orderTypeObj[`${record.applyType}`]}</span>
+        )
+      }
     }, {
       title: '申请时间',
       dataIndex: 'startTime',
@@ -143,6 +164,7 @@ class TableView extends Component {
   }
   componentDidMount() {
     const { getApplyList, getUserApplyList, userType } = this.props;
+    console.log(userType)
     if (userType === '0') {
       getApplyList()
     } else {

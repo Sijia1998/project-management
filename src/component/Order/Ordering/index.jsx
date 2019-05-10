@@ -41,7 +41,7 @@ class RentList extends Component {
     let orderList = userType === '0' ? rentList : userRentList
     orderList.map((item) => {
       data.push({
-        key: item.id,
+        key: item._id,
         orderName: item.orderName,
         orderType: item.orderType,
         deposit: item.deposit,
@@ -113,9 +113,6 @@ class RentList extends Component {
       title: '押金',
       dataIndex: 'deposit',
     }, {
-      title: '物品名称',
-      dataIndex: 'productName',
-    }, {
       title: '备注',
       dataIndex: 'note',
     }, {
@@ -144,9 +141,6 @@ class RentList extends Component {
     }, {
       title: '押金',
       dataIndex: 'deposit',
-    }, {
-      title: '物品名称',
-      dataIndex: 'productName',
     }, {
       title: '备注',
       dataIndex: 'note',

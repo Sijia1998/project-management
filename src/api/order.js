@@ -1,22 +1,20 @@
 import api from '@/utils/request'
 
-export const getOrdersList = ()=>{
+export const getOrdersList = () => {
   return api.request({
-    url:'orders',
-    method:'get'
+    url: 'orders',
+    method: 'get'
   })
 }
 
 export const getOrderDetail = data => {
   return api.request({
-    url: 'order',
+    url: `order/${data}`,
     method: 'get',
-    params:{
-      data
-    }
   })
 }
 
+// 租借物品
 export const createOrder = data => {
   return api.request({
     url: 'order',
@@ -37,9 +35,8 @@ export const updateOrder = data => {
 
 export const deleteOrder = data => {
   return api.request({
-    url: 'order',
+    url: `order/${data}`,
     method: 'delete',
-    data
   })
 }
 

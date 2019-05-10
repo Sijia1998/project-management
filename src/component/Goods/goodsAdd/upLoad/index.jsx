@@ -3,6 +3,9 @@ import React, { Component } from 'react'
 
 function getBase64(img, callback) {
   const reader = new FileReader();
+  console.log('img', reader)
+  console.log('img', img)
+  console.log('img', reader.result)
   reader.addEventListener('load', () => callback(reader.result));
   reader.readAsDataURL(img);
 }
@@ -22,6 +25,7 @@ function beforeUpload(file) {
 class PicUpload extends Component {
   state = {
     loading: false,
+    imageUrl: ''
   };
 
   handleChange = (info) => {
@@ -36,7 +40,7 @@ class PicUpload extends Component {
         loading: false,
       }));
     }
-    console.log('img', this.state.imageUrl)
+
   }
 
   render() {

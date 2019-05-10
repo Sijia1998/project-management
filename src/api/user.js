@@ -4,9 +4,7 @@ export const login = data => {
   return api.request({
     url: '/user',
     method: 'get',
-    params:{
-      data,
-    }
+    params: data
   })
 }
 
