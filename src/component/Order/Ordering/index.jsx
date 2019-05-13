@@ -9,29 +9,32 @@ import ModalForm from '@/component/Modal/OrderModal'
 const confirm = Modal.confirm;
 
 
-function showDeleteConfirm(record) {
-  confirm({
-    title: '确定要删除此项吗?',
-    // content: 'Some descriptions',
-    okText: 'Yes',
-    okType: 'danger',
-    cancelText: 'No',
-    async onOk() {
-      let res = await deleteOrder(record.key)
-      if (res.data.status === '0') {
-        message.success('删除成功！')
-      }
-    },
-    onCancel() {
-      console.log('Cancel');
-    },
-  });
-}
 
 class RentList extends Component {
   state = {
     visible: false,
     formValue: null
+  }
+
+  showDeleteConfirm = (record) => {
+    const { getOrderList } = this.props;
+    confirm({
+      title: '确定要删除此项吗?',
+      // content: 'Some descriptions',
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      async onOk() {
+        let res = await deleteOrder(record.key)
+        if (res.data.status === 0) {
+          getOrderList()
+          message.success('删除成功！')
+        }
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
   }
   getSourceData = () => {
     const { rentList, userRentList, userType } = this.props;
@@ -122,7 +125,7 @@ class RentList extends Component {
         <span>
           <a href="javascript:;" onClick={() => this.showModal(record)}>查看</a>
           <Divider type="vertical" />
-          <a href="javascript:;" style={{ color: 'red' }} onClick={() => showDeleteConfirm(record)}>删除</a>
+          <a href="javascript:;" style={{ color: 'red' }} onClick={() => this.showDeleteConfirm(record)}>删除</a>
         </span >
       ),
     }];
@@ -132,6 +135,9 @@ class RentList extends Component {
     }, {
       title: '订单类型',
       dataIndex: 'orderType',
+      render: (text, record) => (
+        <span>{orderTypeObj[`${record.orderType}`]}</span>
+      )
     }, {
       title: '开始时间',
       dataIndex: 'startTime',

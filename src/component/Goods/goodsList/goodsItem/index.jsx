@@ -6,24 +6,49 @@ import { deleteProduct } from '@/api/product'
 const confirm = Modal.confirm;
 const { Meta } = Card;
 
-const showConfirm = (id) => {
-  console.log('id1', id)
-  confirm({
-    title: '是否要删除此物品?',
-    async onOk() {
-      console.log('id', id)
-      let res = await deleteProduct(id)
-      if (res.data.status === 0) {
-        message.success('删除成功')
-      }
-    },
-    onCancel() {
-      console.log('Cancel');
-    },
-  });
-}
+
 
 class GoodsItem extends Component {
+  state = {
+    visible: false
+  }
+
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  }
+  handleOk = (e) => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  }
+
+  handleCancel = (e) => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  }
+  showConfirm = (id) => {
+    const { getGoodsList } = this.props
+    console.log('id1', id)
+    confirm({
+      title: '是否要删除此物品?',
+      async onOk() {
+        console.log('id', id)
+        let res = await deleteProduct(id)
+        if (res.data.status === 0) {
+          message.success('删除成功')
+          getGoodsList()
+        }
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  }
   render() {
     const { productId, productName, productPrice, productType, imgUrl, total, numberIng, numberDone, noteForC, deposit, note } = this.props
     const goodsType = {
@@ -57,11 +82,21 @@ class GoodsItem extends Component {
             <div>备注:{note}</div>
             <div>用户备注:{noteForC}</div>
             <div style={{ display: 'flex', position: 'relative', top: 20, justifyContent: 'space-around' }}>
-              <Button type="primary" style={{ width: 70, height: 30 }} onClick={() => showConfirm(productId)}>编辑</Button>
-              <Button type="danger" style={{ width: 70, height: 30 }} onClick={() => showConfirm(productId)}>删除</Button>
+              <Button type="primary" style={{ width: 70, height: 30 }} onClick={() => this.showModal(productId)}>编辑</Button>
+              <Button type="danger" style={{ width: 70, height: 30 }} onClick={() => this.showConfirm(productId)}>删除</Button>
             </div>
           </div>
         </Card>
+        <Modal
+          title="Basic Modal"
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+        </Modal>
       </div>
     )
   }

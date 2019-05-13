@@ -8,6 +8,14 @@ export const login = data => {
   })
 }
 
+export const updateUserInfo = data => {
+  return api.request({
+    url: '/user',
+    method: 'put',
+    data
+  })
+}
+
 export const registe = data => {
   return api.request({
     url: '/user',

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 // import styles from './style.less'
 import { Layout, Menu, Icon } from 'antd';
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { routes, commonRoutes } from '@/config/menu'
 import { connect } from 'react-redux'
 const { Sider } = Layout;
@@ -10,6 +10,17 @@ const { SubMenu } = Menu;
 
 
 class SiderBar extends Component {
+  // state = {
+  //   activeKey: ['contract_info']
+  // }
+  // componentDidMount() {
+  //   const { history } = this.props;
+  //   history.listen(route => {
+  //     this.setState({
+  //       activeKey: [...this.state.activeKey, route.pathname.substring(12)]
+  //     })
+  //   })
+  // }
   getMenuList = () => {
     const { userInfo: { userType } } = this.props
     // 根据用户类型渲染路由组件
@@ -22,6 +33,7 @@ class SiderBar extends Component {
       </SubMenu>
     ))
   }
+
   render() {
     return (<Sider width={200} style={{ background: '#fff' }}>
       <Menu
@@ -41,4 +53,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(SiderBar)
+export default connect(mapStateToProps)(withRouter(SiderBar))

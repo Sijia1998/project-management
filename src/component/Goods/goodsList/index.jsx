@@ -9,7 +9,7 @@ const NoProductInfo = function () {
 }
 
 const ProductList = function (props) {
-  const { productlist } = props
+  const { productlist, getGoodsList } = props
   return <Fragment>
     {
       productlist.map((item, idx) => (
@@ -26,6 +26,7 @@ const ProductList = function (props) {
           noteForC={item.noteForC}
           note={item.note}
           deposit={item.deposit}
+          getGoodsList={getGoodsList}
         >
         </GoodsItem>
       )
@@ -36,10 +37,10 @@ const ProductList = function (props) {
 
 class GoodsList extends Component {
   render() {
-    const { goodsList } = this.props;
+    const { goodsList, getGoodsList } = this.props;
     return (
       <div className={styles['goods-container']}>
-        {goodsList.length !== 0 ? <ProductList productlist={goodsList}></ProductList> : <NoProductInfo></NoProductInfo>}
+        {goodsList.length !== 0 ? <ProductList getGoodsList={getGoodsList} productlist={goodsList}></ProductList> : <NoProductInfo></NoProductInfo>}
       </div>
     )
   }

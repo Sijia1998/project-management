@@ -46,7 +46,7 @@ export const routes = [
       iconType: 'notification',
       title: '申请列表',
     }, {
-      key: 'apply_surrender',
+      key: 'apply_processed',
       path: '/management/apply_processed',
       component: ProcessedList,
       iconType: 'notification',
@@ -62,7 +62,7 @@ export const commonRoutes = [
     title: '物品信息',
     children: [{
       key: 'goods_list',
-      path: '/management/goodslist',
+      path: '/management/goods_list',
       component: UserGoodsList,
       iconType: 'user',
       title: '物品列表',
@@ -73,7 +73,7 @@ export const commonRoutes = [
     title: '租赁信息',
     children: [{
       key: 'rent_list',
-      path: '/management/rentlist',
+      path: '/management/rent_list',
       component: OrderList,
       iconType: 'laptop',
       title: '我的订单',
@@ -83,13 +83,13 @@ export const commonRoutes = [
     iconType: 'cloud-upload',
     title: '服务中心',
     children: [{
-      key: 'apply_rent',
+      key: 'create_apply',
       path: '/management/create_apply',
       component: CreateApply,
       iconType: 'notification',
       title: '创建申请',
     }, {
-      key: 'apply_surrender',
+      key: 'own_apply_list',
       path: '/management/own_apply_list',
       component: ApplyList,
       iconType: 'notification',

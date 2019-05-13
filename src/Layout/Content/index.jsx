@@ -6,6 +6,8 @@ import { routes, commonRoutes } from '@/config/menu'
 import Charts from '@/component/Charts'
 import WelcomeView from '@/component/Welcome'
 import { connect } from 'react-redux'
+import HomePage from '@/component/HomePage'
+
 const { Content } = Layout;
 
 class ContentView extends Component {
@@ -27,6 +29,7 @@ class ContentView extends Component {
                 <Route path={item.path} exact key={item.key} component={item.component}></Route>
               ))
             ))}
+            <Route exact path='/management/homepage' component={HomePage}></Route>
           </Switch>
         </div>
       </Content>

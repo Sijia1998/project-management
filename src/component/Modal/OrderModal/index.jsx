@@ -71,14 +71,6 @@ class ModelView extends Component {
               <Input disabled style={{ width: 200 }} />
             )}
           </Form.Item>
-          <Form.Item label="物品名称">
-            {getFieldDecorator('productName', {
-              initialValue: formValue.productName,
-              rules: [{ required: true, message: '请输入详细信息!' }],
-            })(
-              <Input disabled style={{ width: 200 }} />
-            )}
-          </Form.Item>
           <Form.Item label="备注">
             {getFieldDecorator('note', {
               initialValue: formValue.note,

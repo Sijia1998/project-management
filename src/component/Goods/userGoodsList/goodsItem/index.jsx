@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styles from './style.less'
 import { Card, Button, Modal, message, Input, InputNumber, DatePicker, Select } from 'antd';
 import { createOrder } from '@/api/order'
+import { withRouter } from 'react-router-dom'
 import moment from 'moment'
 
 const confirm = Modal.confirm;
@@ -10,7 +11,7 @@ const Option = Select.Option;
 class GoodsItem extends Component {
   state = {
     visible: false,
-    endTime: moment().format('YYYY-MM-DD'),
+    endTime: moment().format('YYYY-MM-DD') + ' 23:59:59',
     number: '1',
     orderType: '0'
   }
@@ -21,7 +22,7 @@ class GoodsItem extends Component {
   }
   handleOnChange = time => {
     this.setState({
-      endTime: moment(time).format('YYYY-MM-DD')
+      endTime: moment(time).format('YYYY-MM-DD') + ' 23:59:59'
     })
   }
   handleSelect = type => {
@@ -36,10 +37,11 @@ class GoodsItem extends Component {
     })
   }
   handleOk = async (id, note) => {
+    const { history } = this.props;
     let data = {
       _id: id,
       endTime: this.state.endTime,
-      number: this.state.number,
+      number: Number(this.state.number),
       orderType: this.state.orderType,
       note: note
     }
@@ -49,8 +51,9 @@ class GoodsItem extends Component {
       this.setState({
         visible: false
       })
+      history.push('rent_list')
     } else {
-      message.error('租借失败')
+      message.error(res.data.msg)
     }
   }
   handleCancel = () => {
@@ -127,4 +130,4 @@ class GoodsItem extends Component {
   }
 }
 
-export default GoodsItem
+export default withRouter(GoodsItem)
