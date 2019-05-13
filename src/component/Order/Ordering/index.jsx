@@ -13,7 +13,7 @@ const confirm = Modal.confirm;
 class RentList extends Component {
   state = {
     visible: false,
-    formValue: null
+    formValue: null,
   }
 
   showDeleteConfirm = (record) => {
@@ -91,8 +91,8 @@ class RentList extends Component {
     const { userType } = this.props
     const data = this.getSourceData()
     const orderTypeObj = {
-      '0': '故障报修',
-      '1': '物品续租'
+      '0': '个人',
+      '1': '团体'
     }
     const adminColumns = [{
       title: '订单名称',

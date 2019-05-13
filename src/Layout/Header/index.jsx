@@ -28,17 +28,18 @@ class HeaderBar extends Component {
     return (
       <Header className="header">
         <div className="logo" />
-        <span style={{ color: "white", fontSize: "20px" }}>旅游用品租赁管理系统</span>
+        <span style={{ color: "white", fontSize: "20px" }}><Link to='/management'>旅游用品租赁管理系统</Link></span>
         <div style={{
           float: 'right'
         }}>
           <Dropdown overlay={menu} placement="bottomCenter">
-            <a className="ant-dropdown-link" href="javascript:;">
+            <a className="ant-dropdown-link" href=" ">
               <Avatar
                 icon="user"
                 size="large"
+                src={userInfo.userPic}
               />
-            </a>
+            </ a>
           </Dropdown>
         </div>
 

@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Form, Input, Upload, Icon, message, Button, InputNumber } from 'antd'
 import { connect } from 'react-redux'
-import { updateUserInfo } from '@/api/user'
+import {updateUserInfo} from '@/api/user'
+import * as custom from '@/component/Login/store/actionCreators'
 
 
 function getBase64(img, callback) {
@@ -50,19 +51,19 @@ class UserPage extends Component {
   }
 
   handleSubmit = (e) => {
-    const { form: { validateFields } } = this.props;
+    const { form: { validateFields } ,updateInfo} = this.props;
     e.preventDefault();
     validateFields(async (err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-
         let res = await updateUserInfo(values)
-        console.log(res)
+        console.log(res.data.status)
         if (res.data.status === 0) {
           message.success('修改成功')
           this.setState({
             change: true
           })
+          updateInfo()
         } else {
           message.error(res.data.msg)
         }
@@ -190,7 +191,15 @@ const mapStateToProps = state => {
     userInfo: state.login
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    // 获取物品列表
+    updateInfo() {
+      dispatch(custom.updateUserInfo())
+    }
+  }
+}
 
 
 
-export default connect(mapStateToProps)(Form.create()(UserPage))
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create()(UserPage))

@@ -24,6 +24,15 @@ export const getProductList = () => {
   })
 }
 
+// 管理员修改物品信息
+export const updateProduct = data => {
+  return api.request({
+    url: 'product',
+    method: 'put',
+    data
+  })
+}
+
 // 查看物品详情
 export const getProductDetail = data => {
   return api.request({
@@ -39,5 +48,13 @@ export const rentProduct = data => {
     url: 'order',
     method: 'post',
     data
+  })
+}
+
+// 获取自己的订单
+export const reletProduct = data => {
+  return api.request({
+    url: 'product/mine',
+    method: 'get'
   })
 }

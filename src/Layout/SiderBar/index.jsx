@@ -7,20 +7,21 @@ import { connect } from 'react-redux'
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
-
-
 class SiderBar extends Component {
-  // state = {
-  //   activeKey: ['contract_info']
-  // }
-  // componentDidMount() {
-  //   const { history } = this.props;
-  //   history.listen(route => {
-  //     this.setState({
-  //       activeKey: [...this.state.activeKey, route.pathname.substring(12)]
-  //     })
-  //   })
-  // }
+  rootSubmenuKeys = ['goods_info', 'contract_info', 'apply_list'];
+
+  state = {
+    activeKey: []
+  }
+  componentDidMount() {
+    const { history } = this.props;
+    history.listen(route => {
+      console.log('aaa', route);
+      this.setState({
+        activeKey: [route.pathname.substring(12)]
+      })
+    })
+  }
   getMenuList = () => {
     const { userInfo: { userType } } = this.props
     // 根据用户类型渲染路由组件
@@ -34,12 +35,33 @@ class SiderBar extends Component {
     ))
   }
 
+  selectKey = (item) => {
+    this.setState({
+      activeKey: item.keyPath
+    })
+    console.log(item);
+  }
+  // onOpenChange = openKeys => {
+  // console.log('open', openKeys);
+  // const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+  // if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+  // this.setState({ openKeys });
+  // } else {
+  // this.setState({
+  // openKeys: latestOpenKey ? [latestOpenKey] : [],
+  // });
+  // }
+  // };
+
   render() {
     return (<Sider width={200} style={{ background: '#fff' }}>
       <Menu
         mode="inline"
-        // theme="dark"
-        defaultOpenKeys={['goods_info']}
+        selectedKeys={this.state.activeKey}
+        openKeys={this.rootSubmenuKeys}
+        inlineCollapsed={true}
+        onSelect={this.selectKey}
+        // onOpenChange={this.onOpenChange}
         style={{ height: '100%', borderRight: 0 }}
       >
         {this.getMenuList()}

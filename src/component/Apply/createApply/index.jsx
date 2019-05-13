@@ -1,14 +1,23 @@
 import React, { Component } from 'react'
 import {
-  Form, InputNumber, Button, Input, Select, message
+  Form, InputNumber, Button, Input, Select, message, Card, DatePicker
 } from 'antd';
 import { createApply } from '@/api/apply'
 import { withRouter } from 'react-router-dom'
+import { reletProduct } from '@/api/product'
+import moment from 'moment'
+
+const { Meta } = Card;
 const { TextArea } = Input;
 const Option = Select.Option;
 
 
 class CreateApply extends Component {
+  state = {
+    selectIsShow: false,
+    productList: [],
+    productPic: ''
+  }
   handleSubmit = (e) => {
     const { form: { validateFields }, history } = this.props;
     e.preventDefault();
@@ -16,7 +25,17 @@ class CreateApply extends Component {
       if (err) {
         return;
       }
-      let result = await createApply(fieldsValue)
+      console.log('values', fieldsValue)
+      let formData = {
+        applyTitle: fieldsValue['applyTitle'],
+        applyContent: fieldsValue['applyContent'],
+        applyType: fieldsValue['applyType'],
+        orderData: {
+          endTime: moment(fieldsValue['endTime']).format('YYYY-MM-DD'),
+          _id: fieldsValue['productName']
+        }
+      }
+      let result = await createApply(formData)
       console.log('data', result)
       if (result.data.status === 0) {
         message.success('申请提交成功', 2, () => {
@@ -27,6 +46,38 @@ class CreateApply extends Component {
         message.error('申请失败')
       }
     });
+  }
+  handleChange = async key => {
+    if (key === '1') {
+      this.setState({
+        selectIsShow: true
+      })
+      let res = await reletProduct()
+      console.log(res)
+      this.setState({
+        productList: res.data.data
+      })
+    } else {
+      this.setState({
+        selectIsShow: false
+      })
+    }
+  }
+  handleSecChange = key => {
+    this.state.productList.map(item => {
+      if (key === item._id) {
+        this.setState({
+          productPic: item.productPic,
+          productName: item.productName,
+          startTime: item.startTime,
+          endTime: item.endTime,
+          number: item.number
+        })
+      }
+    })
+  }
+  handleTimeChange = (date) => {
+    console.log(moment().format('YYYY-MM-DD'))
   }
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -67,12 +118,45 @@ class CreateApply extends Component {
             {getFieldDecorator('applyType', {
               rules: [{ required: true, message: '请选择申请类型!' }],
             })(
-              <Select style={{ width: 120 }} placeholder="请选择">
+              <Select style={{ width: 120 }} placeholder="请选择" onChange={this.handleChange}>
                 <Option value="0">故障报修</Option>
                 <Option value="1">物品续租</Option>
               </Select>
             )}
           </Form.Item>
+          {this.state.selectIsShow ? <Form.Item
+            label="物品名称"
+          >
+            {getFieldDecorator('productName', {
+              rules: [{ required: true, message: '请选择续租物品!' }],
+            })(
+              <Select style={{ width: 120 }} placeholder="请选择" onChange={this.handleSecChange}>
+                {this.state.productList.map(item => (
+                  <Option value={item._id}>{item.orderName}</Option>
+                ))}
+              </Select>
+            )}
+          </Form.Item> : null}
+          {this.state.productPic ? <Card
+            hoverable
+            style={{ width: 300, margin: '0 auto' }}
+            cover={<img alt="example" src={this.state.productPic} />}
+          >
+            <Meta title={this.state.productName} />
+            <p>数量:{this.state.number}</p>
+            <div>
+              <Form.Item
+                label="结束时间"
+              >
+                {getFieldDecorator('endTime', {
+                  initialValue: moment(this.state.endTime),
+                  rules: [{ required: true, message: '请选择时间!' }],
+                })(
+                  <DatePicker onChange={this.handleTimeChange} />
+                )}
+              </Form.Item>
+            </div>
+          </Card> : null}
           <Form.Item
             wrapperCol={{
               xs: { span: 24, offset: 0 },

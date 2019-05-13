@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes'
-import { login } from '@/api/user'
+import { login,getCusInfo } from '@/api/user'
 import { message } from 'antd'
 
 const changeUserInfo = data => ({
@@ -10,6 +10,17 @@ const changeUserInfo = data => ({
 export const getUserInfo = () => ({
   type: actionTypes.GET_USERINFO,
 })
+
+export const updateUserInfo = () => {
+  return async dispatch => {
+    let res = await getCusInfo()
+    if (res.data.status === 0) {
+      dispatch(changeUserInfo(res.data.data))
+    } else {
+      message.error('更新失败')
+    }
+  }
+}
 
 export const saveUserInfo = data => {
   return async dispatch => {

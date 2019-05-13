@@ -12,9 +12,11 @@ class HomePage extends Component {
     return (
       <div className={styles['home-page-wrapper']}>
         <h2 style={{ textAlign: 'center' }}>个人主页</h2>
+        {userInfo.userType === '1'? (
         <div className="userinfo-form">
-          {userInfo.userType === '1' ? <UserPage></UserPage> : <AdminPage></AdminPage>}
+          <UserPage></UserPage>
         </div>
+        ):<AdminPage></AdminPage> }
       </div>
     )
   }

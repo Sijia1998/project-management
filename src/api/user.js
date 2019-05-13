@@ -8,6 +8,7 @@ export const login = data => {
   })
 }
 
+
 export const updateUserInfo = data => {
   return api.request({
     url: '/user',
@@ -33,7 +34,7 @@ export const getBSInfo = () => {
 
 export const getCusInfo = () => {
   return api.request({
-    url: 'getCInfo',
+    url: 'users',
     method: 'get'
   })
 }
